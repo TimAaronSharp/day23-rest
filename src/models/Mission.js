@@ -9,7 +9,7 @@ export const MissionSchema = new Schema(
     year: { type: String, minLength: 1, maxLength: 20, required: true },
     locationId: { type: Schema.ObjectId, required: true, ref: 'Location' },
     ratId: { type: Schema.ObjectId, required: true, ref: 'Rat' },
-    completed: { type: Boolean, required: true }
+    completed: { type: Boolean, required: true, default: false }
   },
   {
     timestamps: true, toJSON: { virtuals: true }
@@ -27,5 +27,8 @@ MissionSchema.virtual('rat', {
   ref: 'Rat',
   localField: 'ratId',
   foreignField: '_id',
-  justOne: true
+  justOne: true,
+  options: {
+    select: 'callsign specialties'
+  }
 })
